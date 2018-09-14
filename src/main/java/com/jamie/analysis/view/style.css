@@ -1,0 +1,8 @@
+
+.textField {
+	-fx-text-inner-color: #a0a0a0; // or any color you want
+}
+
+.closeBtn:hover {
+    -fx-background-color: red;
+}

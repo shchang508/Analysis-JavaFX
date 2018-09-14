@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="560.0" style="-fx-background-color: #2b3e50;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jamie.analysis.view.OverviewController">
+   <children>
+      <JFXButton id="directory" fx:id="directoryBtn" alignment="CENTER" layoutX="282.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#directoryBtnHandle" prefHeight="27.0" prefWidth="147.0" ripplerFill="WHITE" style="-fx-background-color: #2b3e50;" styleClass="directoryBtn" text="      Select a directory" textAlignment="RIGHT" textFill="WHITE">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXTextField fx:id="directoryField" accessibleRole="IMAGE_VIEW" focusColor="#d9534f" layoutX="140.0" layoutY="114.0" prefHeight="27.0" prefWidth="280.0" promptText=" Enter a path" styleClass="textField" stylesheets="@style.css" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0">
+         <font>
+            <Font size="15.0" />
+         </font></JFXTextField>
+      <JFXButton fx:id="startBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="262.0" onAction="#startBtnHandle" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: d9534f;" text="        START ANALYZING" textAlignment="RIGHT" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
+         <font>
+            <Font name="Calibri" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="289.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@outline_create_new_folder_white_18dp.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="187.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@outline_send_white_18dp.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="closeBtn" layoutX="526.0" layoutY="-2.0" onAction="#closeBtnHandle" prefHeight="30.0" prefWidth="30.0" styleClass="closeBtn" stylesheets="@style.css" text="X" textFill="WHITE" AnchorPane.bottomAnchor="319.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@output2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
