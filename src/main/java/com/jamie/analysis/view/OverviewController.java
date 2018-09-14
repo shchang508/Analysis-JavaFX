@@ -32,6 +32,9 @@ public class OverviewController {
 
 	@FXML
 	private JFXButton closeBtn;
+	
+	@FXML
+	private JFXButton closeBtn2;
 
 	@FXML
 	private JFXButton directoryBtn;
@@ -68,7 +71,7 @@ public class OverviewController {
 	void closeBtnHandle(ActionEvent event) {
 		System.exit(0);
 	}
-
+	
 	// A button to select a directory from users' computer
 	@FXML
 	public void directoryBtnHandle(ActionEvent event) {
@@ -103,7 +106,6 @@ public class OverviewController {
 			stage.show();
 
 			/************************************* Start ************************************/
-			OverviewController oc = new OverviewController();
 			String streamPath = field1;
 
 			if (StringUtils.isBlank(streamPath)) {
@@ -132,8 +134,7 @@ public class OverviewController {
 				fileList.add(fName);
 			}
 
-			OverviewController oc1 = new OverviewController();
-			oc1.getStage().close(); // Window will close after generate xml file
+			stage.close(); // Window will close after generate xml file
 
 			service.genMpegExcel(workbook, mpegList, fileList);
 
