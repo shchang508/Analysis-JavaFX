@@ -49,7 +49,7 @@ public class MainApp extends Application {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(MainApp.class.getResource("view/Overview.fxml"));
-			AnchorPane root = (AnchorPane) fxmlLoader.load();	
+			root = (AnchorPane) fxmlLoader.load();	
 			
 			//Make Anchorpane draggable
 			Scene scene = new Scene(root);

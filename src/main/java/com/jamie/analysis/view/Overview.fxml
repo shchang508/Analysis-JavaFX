@@ -21,7 +21,7 @@
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <JFXButton fx:id="startBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="262.0" onAction="#startBtnHandle" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: d9534f;" text="        START ANALYZING" textAlignment="RIGHT" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
+      <JFXButton fx:id="startBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="262.0" onAction="#startBtnHandle" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: d9534f;" text="        START ANALYSING" textAlignment="RIGHT" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
          <font>
             <Font name="Calibri" size="20.0" />
          </font>

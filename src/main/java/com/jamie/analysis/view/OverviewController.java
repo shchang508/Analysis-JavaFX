@@ -17,12 +17,15 @@ import com.jamie.analysis.util.FileReader;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -44,20 +47,24 @@ public class OverviewController {
 
 	@FXML
 	private JFXTextField directoryField = new JFXTextField();
+	
+	@FXML
+	private JFXTextField resultField = new JFXTextField();
 
 	@FXML
 	Stage stage;
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
 	
-	String field1;
+	@FXML
+	Stage stage1;
+	
+	@FXML
+	AnchorPane loadingLayout;
+	
+	@FXML
+	AnchorPane resultLayout;
 
+	String field1;
+	
 	private MainApp mainApp;
 
 	DirectoryChooser chooser = new DirectoryChooser();
@@ -70,6 +77,11 @@ public class OverviewController {
 	@FXML
 	void closeBtnHandle(ActionEvent event) {
 		System.exit(0);
+	}
+	
+	@FXML
+	void backBtnHandle(ActionEvent event) {
+		stage1.hide();
 	}
 	
 	// A button to select a directory from users' computer
@@ -94,17 +106,18 @@ public class OverviewController {
 	@FXML
 	public void startBtnHandle(ActionEvent event) {
 		try {
-
+			
+			//Loading window
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(OverviewController.class.getResource("Loading.fxml"));
-			AnchorPane layout = (AnchorPane) fxmlLoader.load();
+			loadingLayout = (AnchorPane) fxmlLoader.load();
 
-			Scene scene = new Scene(layout);
+			Scene scene = new Scene(loadingLayout);
 			stage = new Stage(StageStyle.UNDECORATED);
 			stage.setTitle("Stream Analysis");
 			stage.setScene(scene);
 			stage.show();
-
+			
 			/************************************* Start ************************************/
 			String streamPath = field1;
 
@@ -134,7 +147,7 @@ public class OverviewController {
 				fileList.add(fName);
 			}
 
-			stage.close(); // Window will close after generate xml file
+			stage.hide(); // Window will close after generate xml file
 
 			service.genMpegExcel(workbook, mpegList, fileList);
 
@@ -142,10 +155,28 @@ public class OverviewController {
 			String destination = "D:\\Stream Analysis";
 
 			CwFileUtils.createExcelFile(workbook, reportName, destination);
+			
+			
+			
+			
+			//Result window
+			FXMLLoader fxmlLoader1 = new FXMLLoader();
+			fxmlLoader1.setLocation(OverviewController.class.getResource("Result.fxml"));
+			resultLayout = (AnchorPane) fxmlLoader1.load();
+
+			Scene scene1 = new Scene(resultLayout);
+			stage1 = new Stage(StageStyle.UNDECORATED);
+			stage1.setScene(scene1);
+			stage1.show();
+			
+			resultField.setEditable(false);
+//			System.out.println("Resport name: " + reportName);
+			resultField.setText(reportName);
+			System.out.println(resultField.getText());
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
-//	        Logger logger = Logger.getLogger(getClass().getName());
 //	        logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		} catch (Exception e) {
 			e.printStackTrace();

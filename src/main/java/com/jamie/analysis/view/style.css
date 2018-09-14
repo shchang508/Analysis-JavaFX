@@ -3,12 +3,14 @@
 	-fx-text-inner-color: #a0a0a0; 
 }
 
+.textField1 {
+	-fx-text-inner-color: #ffffff; 
+}
+
 .closeBtn:hover {
     -fx-background-color: red;
 }
 
-.closeBtn2:hover {
-    -fx-background-color: red;
-}
+
 
 
