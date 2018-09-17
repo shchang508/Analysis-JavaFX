@@ -62,7 +62,7 @@ public class OverviewController {
 	
 	@FXML
 	AnchorPane resultLayout;
-
+	
 	String field1;
 	
 	private MainApp mainApp;
@@ -81,7 +81,8 @@ public class OverviewController {
 	
 	@FXML
 	void backBtnHandle(ActionEvent event) {
-		stage1.hide();
+//		stage1.hide();
+		System.exit(0);
 	}
 	
 	// A button to select a directory from users' computer
@@ -90,6 +91,7 @@ public class OverviewController {
 		// Alert message to remind users to launch the TSReader
 		Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please check you launch the TSReader first.", ButtonType.OK);
 		alert.setHeaderText("Heads up!");
+		alert.setTitle("Information");
 		alert.setResizable(false);
 		alert.showAndWait();
 
@@ -97,6 +99,7 @@ public class OverviewController {
 		chooser.setTitle("Stream Analysis");
 		File selectedDirectory = chooser.showDialog(new Stage());
 		field1 = selectedDirectory.getAbsolutePath();
+		
 		System.out.println("Text: " + field1);
 //		directoryField.setEditable(false);
 		directoryField.setText(field1);
@@ -117,6 +120,7 @@ public class OverviewController {
 			stage.setTitle("Stream Analysis");
 			stage.setScene(scene);
 			stage.show();
+			
 			
 			/************************************* Start ************************************/
 			String streamPath = field1;
@@ -160,19 +164,27 @@ public class OverviewController {
 			
 			
 			//Result window
-			FXMLLoader fxmlLoader1 = new FXMLLoader();
-			fxmlLoader1.setLocation(OverviewController.class.getResource("Result.fxml"));
-			resultLayout = (AnchorPane) fxmlLoader1.load();
+//			FXMLLoader fxmlLoader1 = new FXMLLoader();
+//			fxmlLoader1.setLocation(OverviewController.class.getResource("Result.fxml"));
+//			resultLayout = (AnchorPane) fxmlLoader1.load();
+//		
+//
+//			Scene scene1 = new Scene(resultLayout);
+//			stage1 = new Stage(StageStyle.UNDECORATED);
+//			stage1.setScene(scene1);
+//			stage1.show();
 
-			Scene scene1 = new Scene(resultLayout);
-			stage1 = new Stage(StageStyle.UNDECORATED);
-			stage1.setScene(scene1);
-			stage1.show();
 			
-			resultField.setEditable(false);
+//			resultField.setEditable(false);
 //			System.out.println("Resport name: " + reportName);
-			resultField.setText(reportName);
-			System.out.println(resultField.getText());
+//			resultField.setText(reportName);
+//			System.out.println(resultField.getText());
+			
+			Alert alertResult = new Alert(Alert.AlertType.INFORMATION, reportName + ".xlsx has been generted to D:\\Stream Analysis successfully!" , ButtonType.OK);
+			alertResult.setHeaderText(null);
+			alertResult.setTitle("Result");
+			alertResult.setResizable(false);
+			alertResult.showAndWait();
 			
 
 		} catch (IOException e) {

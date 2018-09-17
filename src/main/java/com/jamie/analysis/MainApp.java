@@ -1,8 +1,6 @@
 package com.jamie.analysis;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
