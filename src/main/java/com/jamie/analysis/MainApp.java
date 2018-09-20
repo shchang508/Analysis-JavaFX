@@ -1,17 +1,17 @@
 package com.jamie.analysis;
 
 import java.awt.HeadlessException;
-import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
+import com.jamie.analysis.view.ScreensController;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,10 +20,15 @@ public class MainApp extends Application {
 	private static final Logger logger = Logger.getLogger(MainApp.class);
 
 	private Stage primaryStage;
-	private AnchorPane root;
+//	private AnchorPane root;
 
 	private double xOffset = 0;
 	private double yOffset = 0;
+
+	public static String screen1ID = "main";
+	public static String screen1File = "Overview.fxml";
+	public static String screen2ID = "loading";
+	public static String screen2File = "Loading.fxml";
 
 	@Override
 	public void start(final Stage primaryStage) throws InterruptedException {
@@ -44,37 +49,36 @@ public class MainApp extends Application {
 	}
 
 	public void initRootLayout() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(MainApp.class.getResource("view/Overview.fxml"));
-			root = (AnchorPane) fxmlLoader.load();	
-			
-			//Make Anchorpane draggable
-			Scene scene = new Scene(root);
-			scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent event) {
-					xOffset = event.getSceneX();
-					yOffset = event.getSceneY();
-				}
-			});
+		ScreensController mainContainer = new ScreensController();
+		mainContainer.loadScreen(MainApp.screen1ID, MainApp.screen1File);
+		mainContainer.loadScreen(MainApp.screen2ID, MainApp.screen2File);
 
-			scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent event) {
-					primaryStage.setX(event.getScreenX() - xOffset);
-					primaryStage.setY(event.getScreenY() - yOffset);
-				}
-			});
+		mainContainer.setScreen(MainApp.screen1ID);
 
-			
-			// Show the scene containing the root layout.
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			primaryStage.setResizable(false);
-			primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("view/output.png")));
+		Group group = new Group();
+		group.getChildren().addAll(mainContainer);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// Make Anchorpane draggable
+		Scene scene = new Scene(group);
+		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
+		});
+
+		scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent event) {
+				primaryStage.setX(event.getScreenX() - xOffset);
+				primaryStage.setY(event.getScreenY() - yOffset);
+			}
+		});
+
+		// Show the scene containing the root layout.
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		primaryStage.setResizable(false);
+		primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("view/output.png")));
 	}
 
 	public static void main(String[] args) {
