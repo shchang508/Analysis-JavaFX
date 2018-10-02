@@ -122,9 +122,14 @@ public class TestService extends BaseAbstractService {
 			/************************************ Number of channels ************************************/
 			cell = detailRow.createCell(1);
 			List<PMTs_CHANNEL> pmtsChannelList = table.getPmts().getPmtsChannelList();
-			logger.info("Number of Channels : " + pmtsChannelList.size());
-			cell.setCellValue(pmtsChannelList.size());
-			cell.setCellStyle(cellStyleMap.get("style_02"));
+			
+			if (pmtsChannelList != null) {
+				logger.info("Number of Channels : " + pmtsChannelList.size());
+				cell.setCellValue(pmtsChannelList.size());
+				cell.setCellStyle(cellStyleMap.get("style_02"));
+			} else {
+				logger.info("pmtsChannelList is an empty list!");
+			}
 
 			boolean dolbyFlag = true;
 			boolean resolutionFlag = true;

@@ -23,8 +23,6 @@ import com.victorlaerte.asynctask.AsyncTask;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,7 +40,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 
 	@FXML
 	private JFXButton closeBtn;
-
+	
 	@FXML
 	private ImageView image;
 
@@ -98,25 +96,10 @@ public class OverviewController implements Initializable, ControlledScreen {
 		System.exit(0);
 	}
 
-	// A button to select a directory from users' computer
 	@FXML
-	public void directoryBtnHandle(ActionEvent event) {
-		
-		// Alert message to remind users to launch the TSReader
-		Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please check you launch the TSReader first.", ButtonType.OK);
-		alert.setHeaderText("Heads up!");
-		alert.setTitle("Information");
-		alert.setResizable(false);
-		alert.showAndWait();
-
-		// Folder chooser
-		chooser.setTitle("Stream Analysis");
-		File selectedDirectory = chooser.showDialog(new Stage());
-		field1 = selectedDirectory.getAbsolutePath();
-
-		System.out.println("Text: " + field1);
-//		directoryField.setEditable(false);
-		directoryField.setText(field1);
+	void backBtnHandle(ActionEvent event) {
+//		stage1.hide();
+		System.exit(0);
 	}
 
 	private class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
@@ -130,9 +113,23 @@ public class OverviewController implements Initializable, ControlledScreen {
 		public Boolean doInBackground(String... params) {
 			System.out.println("Background Thread is running");
 
-			try {
+//			int i = 0;
+//			while (i < 5) {
+//				progressCallback(i);
+//				i++;
+//
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//					return false;
+//				}
+//			}
 
+			try {
+				
 				/************************************* Start ************************************/
+				
 				String streamPath = field1;
 
 				if (StringUtils.isBlank(streamPath)) {
@@ -167,8 +164,6 @@ public class OverviewController implements Initializable, ControlledScreen {
 				String destination = "D:\\Stream Analysis";
 
 				CwFileUtils.createExcelFile(workbook, reportName, destination);
-
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -198,20 +193,47 @@ public class OverviewController implements Initializable, ControlledScreen {
 
 		@Override
 		public void progressCallback(Integer... params) {
+//			System.out.println("Progress " + params[0]);
 			System.out.println("Background Thread callback");
 		}
 	}
+	
+	// A button to select a directory from users' computer
+	@FXML
+	public void directoryBtnHandle(ActionEvent event) {
+		// Alert message to remind users to launch the TSReader
+		Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please check you launch the TSReader first.", ButtonType.OK);
+		alert.setHeaderText("Heads up!");
+		alert.setTitle("Information");
+		alert.setResizable(false);
+		alert.showAndWait();
 
-	// A button to start the main function of this application
+		// Folder chooser
+		chooser.setTitle("Stream Analysis");
+		File selectedDirectory = chooser.showDialog(new Stage());
+		field1 = selectedDirectory.getAbsolutePath();
+
+		System.out.println("Text: " + field1);
+//		directoryField.setEditable(false);
+		directoryField.setText(field1);
+	}
+
+	// A button to start the main function of this app
 	@FXML
 	public void startBtnHandle(ActionEvent event) {
 		try {
+			
+			// Loading screen
+			//myController.setScreen(MainApp.screen2ID);
+			
 			
 			MyAsyncTask myAsyncTask = new MyAsyncTask();
 			myAsyncTask.setDaemon(false);
 			myAsyncTask.execute();
 			
+			
 //			/************************************* Start ************************************/
+//			
 //			String streamPath = field1;
 //
 //			if (StringUtils.isBlank(streamPath)) {
@@ -246,16 +268,10 @@ public class OverviewController implements Initializable, ControlledScreen {
 //			String destination = "D:\\Stream Analysis";
 //
 //			CwFileUtils.createExcelFile(workbook, reportName, destination);
-//
-//			// Go back to main screen after generating the report
-//			myController.setScreen(MainApp.screen1ID);
-//
-			// Result window
-//			Alert alertResult = new Alert(Alert.AlertType.INFORMATION, reportName + ".xlsx has been generted to D:\\Stream Analysis successfully!", ButtonType.OK);
-//			alertResult.setHeaderText(null);
-//			alertResult.setTitle("Result");
-//			alertResult.setResizable(false);
-//			alertResult.showAndWait();
+
+			// Go back to main screen after generating the report
+			//myController.setScreen(MainApp.screen1ID);
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

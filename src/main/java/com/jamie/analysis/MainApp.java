@@ -78,7 +78,7 @@ public class MainApp extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
-		primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("view/output.png")));
+		primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("view/logo.png")));
 	}
 
 	public static void main(String[] args) {

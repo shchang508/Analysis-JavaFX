@@ -15,7 +15,7 @@ public class LoadingController implements Initializable, ControlledScreen {
 
 	public void setScreenParent(ScreensController screenPage) {
 		// TODO Auto-generated method stub
-		this.myController = screenPage;
+
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
