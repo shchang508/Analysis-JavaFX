@@ -19,6 +19,8 @@ public class StreamConvertion {
 	}
 
 	public StreamConvertion(String streampath) throws Exception {
+		createfolder();
+		
 		File folder = new File(streampath);
 		File[] listofFiles = folder.listFiles();
 
@@ -34,13 +36,12 @@ public class StreamConvertion {
 		Set<String> checkFileList = checkFile(listofFiles, listofXml);
 		logger.info("Stream List Size: " + checkFileList.size());
 		TSReader tsReader = new TSReader();
-		logger.info("--------------------FILE LIST--------------------");
+		logger.info("--------------------FILE LIST--------------------"); 
 		/* Load stream and export as XML */
-			createfolder();
 			int count = 0;
 			for (String tsFile : checkFileList) {
 				logger.info("TS File : " + tsFile);
-				if (tsFile.toLowerCase().endsWith(".ts") || tsFile.toLowerCase().endsWith(".trp")) {
+				if (tsFile.toLowerCase().endsWith(".ts") || tsFile.toLowerCase().endsWith(".trp") || tsFile.toLowerCase().endsWith(".tp") || tsFile.toLowerCase().endsWith(".mpg")) {
 					tsReader.send("setting PAST_EIT true");
 					tsReader.send("setting KEEP_SPECIAL_XML true");
 					tsReader.send("source TSReader_FileLoop.dll\n");
@@ -82,7 +83,7 @@ public class StreamConvertion {
 				}
 
 			}
-//			}
+//		}
 			if (isNew) {
 				list.add(f.getName());
 			}
@@ -98,8 +99,8 @@ public class StreamConvertion {
 			if (directory.exists() && i.equals("xml\\")) {
 				File f = new File(path + i);
 				File[] f1 = f.listFiles();
-//				for (File j : f1)
-//					j.delete();
+				for (File j : f1) //Delete last xml file
+					j.delete();
 			}
 			directory.mkdir();
 		}
@@ -112,7 +113,7 @@ public class StreamConvertion {
 			if (directory.exists()) {
 				File f = new File(path + i);
 				File[] f1 = f.listFiles();
-				for (File j : f1)
+				for (File j : f1) //Delete xml files from last time
 					j.delete();
 				directory.delete();
 			}

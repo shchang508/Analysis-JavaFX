@@ -21,8 +21,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.victorlaerte.asynctask.AsyncTask;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class OverviewController implements Initializable, ControlledScreen {
 
@@ -40,7 +37,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 
 	@FXML
 	private JFXButton closeBtn;
-	
+
 	@FXML
 	private ImageView image;
 
@@ -127,9 +124,9 @@ public class OverviewController implements Initializable, ControlledScreen {
 //			}
 
 			try {
-				
+
 				/************************************* Start ************************************/
-				
+
 				String streamPath = field1;
 
 				if (StringUtils.isBlank(streamPath)) {
@@ -164,6 +161,8 @@ public class OverviewController implements Initializable, ControlledScreen {
 				String destination = "D:\\Stream Analysis";
 
 				CwFileUtils.createExcelFile(workbook, reportName, destination);
+				logger.info("--------------------END--------------------");
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -182,13 +181,22 @@ public class OverviewController implements Initializable, ControlledScreen {
 				System.out.println("Done with error");
 			}
 			myController.setScreen(MainApp.screen1ID);
-			
-			//Result pop-up window
-			Alert alertResult = new Alert(Alert.AlertType.INFORMATION, reportName + ".xlsx has been generted to D:\\Stream Analysis successfully!", ButtonType.OK);
-			alertResult.setHeaderText(null);
-			alertResult.setTitle("Result");
-			alertResult.setResizable(false);
-			alertResult.showAndWait();
+
+			// Result pop-up window
+			if (reportName != null) {
+				Alert alertResult = new Alert(Alert.AlertType.INFORMATION, reportName + ".xlsx has been generted to D:\\Stream Analysis successfully!", ButtonType.OK);
+				alertResult.setHeaderText(null);
+				alertResult.setTitle("Result");
+				alertResult.setResizable(false);
+				alertResult.showAndWait();
+			} else {
+				//report does not generate successfully
+				Alert alertResultFail = new Alert(Alert.AlertType.ERROR, "Report generation is unsuccessful...", ButtonType.OK);
+				alertResultFail.setHeaderText(null);
+				alertResultFail.setTitle("Error");
+				alertResultFail.setResizable(false);
+				alertResultFail.showAndWait();
+			}
 		}
 
 		@Override
@@ -197,7 +205,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 			System.out.println("Background Thread callback");
 		}
 	}
-	
+
 	// A button to select a directory from users' computer
 	@FXML
 	public void directoryBtnHandle(ActionEvent event) {
@@ -222,16 +230,14 @@ public class OverviewController implements Initializable, ControlledScreen {
 	@FXML
 	public void startBtnHandle(ActionEvent event) {
 		try {
-			
+
 			// Loading screen
-			//myController.setScreen(MainApp.screen2ID);
-			
-			
+			// myController.setScreen(MainApp.screen2ID);
+
 			MyAsyncTask myAsyncTask = new MyAsyncTask();
 			myAsyncTask.setDaemon(false);
 			myAsyncTask.execute();
-			
-			
+
 //			/************************************* Start ************************************/
 //			
 //			String streamPath = field1;
@@ -270,8 +276,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 //			CwFileUtils.createExcelFile(workbook, reportName, destination);
 
 			// Go back to main screen after generating the report
-			//myController.setScreen(MainApp.screen1ID);
-
+			// myController.setScreen(MainApp.screen1ID);
 
 		} catch (Exception e) {
 			e.printStackTrace();
