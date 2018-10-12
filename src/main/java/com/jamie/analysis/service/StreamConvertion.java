@@ -38,7 +38,7 @@ public class StreamConvertion {
 		TSReader tsReader = new TSReader();
 		logger.info("--------------------FILE LIST--------------------"); 
 		/* Load stream and export as XML */
-			int count = 0;
+			int count = 1;
 			for (String tsFile : checkFileList) {
 				logger.info("TS File : " + tsFile);
 				if (tsFile.toLowerCase().endsWith(".ts") || tsFile.toLowerCase().endsWith(".trp") || tsFile.toLowerCase().endsWith(".tp") || tsFile.toLowerCase().endsWith(".mpg")) {
@@ -47,12 +47,12 @@ public class StreamConvertion {
 					tsReader.send("source TSReader_FileLoop.dll\n");
 					tsReader.send("tune " + streampath + tsFile + "\n");
 					tsReader.send("stall 300");
-					// tsReader.waitfor("311 Table decoding complete"); //TSReader2.8.47c not
-					// support
+					// tsReader.waitfor("311 Table decoding complete"); //TSReader2.8.47c not support
 
 					String xfilename = nameconvert(tsFile, "xml");
 					tsReader.send("export xml " + xfilepath + xfilename);
-					tsReader.waitfor("Data exported");
+					String responseCode = tsReader.waitfor("Data exported");
+					logger.info(">>>>TSReader Response Code : " + responseCode);
 
 					String result = "Stream [" + (count++) + "] is exported as XML: " + tsFile;
 					logger.info(result);

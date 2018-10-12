@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
@@ -50,8 +51,16 @@ public class OverviewController implements Initializable, ControlledScreen {
 	@FXML
 	private JFXTextField directoryField = new JFXTextField();
 
-	@FXML
-	private JFXTextField resultField = new JFXTextField();
+//	@FXML
+//	private JFXTextField resultField = new JFXTextField();
+
+	public JFXTextField getDirectoryField() {
+		return directoryField;
+	}
+
+	public void setDirectoryField(JFXTextField directoryField) {
+		this.directoryField = directoryField;
+	}
 
 	@FXML
 	Stage stage;
@@ -99,6 +108,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 		System.exit(0);
 	}
 
+
 	private class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 		@Override
 		public void onPreExecute() {
@@ -110,33 +120,25 @@ public class OverviewController implements Initializable, ControlledScreen {
 		public Boolean doInBackground(String... params) {
 			System.out.println("Background Thread is running");
 
-//			int i = 0;
-//			while (i < 5) {
-//				progressCallback(i);
-//				i++;
-//
-//				try {
-//					Thread.sleep(1000);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//					return false;
-//				}
-//			}
-
 			try {
 
 				/************************************* Start ************************************/
 
-				String streamPath = field1;
+				String streamPath = directoryField.getText();
+				logger.info("Path : " + streamPath);
 
-				if (StringUtils.isBlank(streamPath)) {
-					streamPath = "D:\\";
-				}
+//				if (StringUtils.isBlank(streamPath)) {
+//					streamPath = "D:\\";
+//					Alert alertPath = new Alert(Alert.AlertType.INFORMATION, "Please input a valid path!", ButtonType.OK);
+//					alertPath.setHeaderText(null);
+//					alertPath.setTitle("Result");
+//					alertPath.setResizable(false);
+//					alertPath.showAndWait();
+//				}
 
 				/************************************* Loading ************************************/
 				StreamConvertion convert = new StreamConvertion(streamPath + "\\");
 
-				// String path = "D:\\Stream\\";
 				String path = "C:\\xml\\";
 
 				FileReader fr = new FileReader();
@@ -155,7 +157,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 					fileList.add(fName);
 				}
 
-				service.genMpegExcel(workbook, mpegList, fileList);
+				service.genMpegExcel(workbook, mpegList, fileList, streamPath);
 
 				reportName = "report_" + new Date().getTime();
 				String destination = "D:\\Stream Analysis";
@@ -190,7 +192,7 @@ public class OverviewController implements Initializable, ControlledScreen {
 				alertResult.setResizable(false);
 				alertResult.showAndWait();
 			} else {
-				//report does not generate successfully
+				// report does not generate successfully
 				Alert alertResultFail = new Alert(Alert.AlertType.ERROR, "Report generation is unsuccessful...", ButtonType.OK);
 				alertResultFail.setHeaderText(null);
 				alertResultFail.setTitle("Error");
@@ -221,19 +223,17 @@ public class OverviewController implements Initializable, ControlledScreen {
 		File selectedDirectory = chooser.showDialog(new Stage());
 		field1 = selectedDirectory.getAbsolutePath();
 
-		System.out.println("Text: " + field1);
+//		System.out.println("Text: " + field1);
 //		directoryField.setEditable(false);
+		logger.info("Path : " + field1);
 		directoryField.setText(field1);
+
 	}
 
 	// A button to start the main function of this app
 	@FXML
 	public void startBtnHandle(ActionEvent event) {
 		try {
-
-			// Loading screen
-			// myController.setScreen(MainApp.screen2ID);
-
 			MyAsyncTask myAsyncTask = new MyAsyncTask();
 			myAsyncTask.setDaemon(false);
 			myAsyncTask.execute();

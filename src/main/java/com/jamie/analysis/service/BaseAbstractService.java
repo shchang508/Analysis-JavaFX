@@ -41,5 +41,6 @@ public class BaseAbstractService {
 		font_02.setFontName("Arial");
 		style_02.setFont(font_02);
 		style_02.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+		style_02.setVerticalAlignment(XSSFCellStyle.ALIGN_FILL);
 	}
 }
